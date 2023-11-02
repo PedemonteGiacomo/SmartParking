@@ -1,36 +1,3 @@
-# %% [markdown]
-# # Pip dependencies
-
-# %%
-#%pip install influxdb-client[ciso]
-
-# %%
-#%pip install git+https://github.com/influxdata/flightsql-dbapi.git
-
-# %%
-#%pip install flightsql-dbapi
-
-# %%
-#!pip install easyocr
-#!pip install imutils
-#%pip install influxdb3-python
-
-# %%
-#%pip install pandas
-
-# %%
-#%pip install opencv-python
-
-# %%
-#%pip install imutils
-
-# %%
-#%pip install easyocr
-#%pip install mqtt_client
-
-# %% [markdown]
-# # Imports
-
 # %%
 import cv2
 from matplotlib import pyplot as plt
@@ -46,9 +13,6 @@ import random
 import time
 import sys
 
-# %% [markdown]
-# # Setup InfluxDB_Client
-
 # %%
 
 def startClient():
@@ -57,7 +21,7 @@ def startClient():
     cert = fh.read()
     fh.close()
 
-    token = "PBQsMSGwxHHTPHJE_BnjnHa0Ftan6IofOPkq7L5qHAkFWaj8sSuj_mhDyOHIuhfyeCpzuvZ2CRuhU4NypQh-kQ=="
+    token = "INFLUX_DB_TOKEN"
     org = "a12a386fcd5e0885"
     host = "https://eu-central-1-1.aws.cloud2.influxdata.com"
     database="Parking"
@@ -174,8 +138,6 @@ def choose_plate_entrance(client):
 
         # Convert to dataframe
         df = table.to_pandas().sort_values(by="time", ascending=False)
-        
-        #print(df)
 
         # Check if the result is empty to understand if a plate wasn't already present in the db to check if assign it to the car which is try to enter
         if df.empty:
@@ -195,8 +157,7 @@ def choose_plate_entrance(client):
             # if is already parked I need to choose a different plate
             elif value:
                 plate_number = choose_random_plate()
-        
-    #print(df)
+
     
 def choose_plate_exits(client):
     client = client
@@ -230,17 +191,6 @@ def choose_plate_exits(client):
                 
     return plate_number
     
-
-
-
-
-# %%
-# plate_number = choose_plate_entrance()
-# print(plate_number)
-
-# %%
-# plate_number = choose_plate_exits()
-# print(plate_number)
 
 #%%
 import paho.mqtt.client as mqtt
